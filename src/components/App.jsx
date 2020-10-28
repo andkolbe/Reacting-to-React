@@ -14,8 +14,12 @@ class App extends React.Component {
         super(props);
         this.state = {
             text: 'needs more coffee',
-            property: "Something about onChange and value. I'm not sure"
+            halpMe: ''
         }; 
+    }
+
+    thisIsCalledAHandler(triggeredEvent) { // I think it connects the value to the onChange
+        this.setState({ halpMe: triggeredEvent.target.value }); // our old friend event.target
     }
 
     render() {
@@ -24,7 +28,8 @@ class App extends React.Component {
                 <h1>{`${this.props.name} ${this.state.text}`}</h1>
                 <div>
                     <label>HALP</label>
-                    <input placeholder="Idk what to write here" value={} onChange={} />
+                    <input placeholder="Idk what to write here" 
+                        value={this.state.halpMe} onChange={(triggeredEvent) => this.thisIsCalledAHandler(triggeredEvent)} />
                 </div>
             </React.Fragment>            
         );
@@ -35,4 +40,5 @@ export default App;
 
 // prop carries information, state carries user activity
 // must use this.setState({}) to update state
+// inputs must have value={} and onChange={}
 // react.Fragment is a shadow div. Won't show up on dev tools
