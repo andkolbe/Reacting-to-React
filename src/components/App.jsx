@@ -14,31 +14,53 @@ class App extends React.Component {
         super(props);
         this.state = {
             text: 'needs more coffee',
-            halpMe: ''
+            halpMe: '',
+            hasLoaded: false
         }; 
     }
 
-    thisIsCalledAHandler(triggeredEvent) { // I think it connects the value to the onChange
-        this.setState({ halpMe: triggeredEvent.target.value }); // our old friend event.target
+    thisIsCalledAHandler(triggeredEvent) { 
+        this.setState({ halpMe: triggeredEvent.target.value }); 
     }
 
+    buttonHandler() {
+        this.setState({ hasLoaded: !this.state.hasLoaded })
+    }
+
+    componentDidMount() {
+        this.setState({ hasLoaded: true })
+    }
+
+
     render() {
-        return (
-            <React.Fragment> 
-                <h1>{`${this.props.name} ${this.state.text}`}</h1>
-                <div>
-                    <label>HALP</label>
-                    <input placeholder="Idk what to write here" 
-                        value={this.state.halpMe} onChange={(triggeredEvent) => this.thisIsCalledAHandler(triggeredEvent)} />
-                </div>
-            </React.Fragment>            
-        );
+        if (this.state.hasLoaded) {
+            return (
+                <React.Fragment> 
+                    <h1>{`${this.props.name} ${this.state.text}`}</h1>
+                    <div>
+                        <input placeholder="Idk what to write here" 
+                            value={this.state.halpMe} onChange={(triggeredEvent) => this.thisIsCalledAHandler(triggeredEvent)} />
+                        <button onClick={() => this.buttonHandler()}>HALP</button>
+                    </div>
+                </React.Fragment>            
+            );
+        } else {
+            return (
+                <React.Fragment> 
+                    <h1>Loading...</h1>
+                    <button onClick={() => this.buttonHandler()}>HALP</button>
+                </React.Fragment>            
+            );
+        }
     }
 };
 
 export default App;
 
-// prop carries information, state carries user activity
+// props is an object
+// props carries information, state carries user activity
+// class allows you to uses state
 // must use this.setState({}) to update state
 // inputs must have value={} and onChange={}
+// value is tied to the state and onChange is what updates that state
 // react.Fragment is a shadow div. Won't show up on dev tools
